@@ -48,6 +48,238 @@
       padding: 16px;
     }
 
+    .hero-banner {
+      width: 100%;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.18), rgba(59, 130, 246, 0.16));
+      border: 1px solid rgba(94, 234, 212, 0.35);
+      border-radius: 20px;
+      padding: 18px 18px 14px;
+      margin-bottom: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(14, 165, 233, 0.15);
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.3), transparent 40%),
+        radial-gradient(circle at 80% 10%, rgba(34, 197, 94, 0.25), transparent 35%),
+        radial-gradient(circle at 50% 80%, rgba(59, 130, 246, 0.22), transparent 40%);
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .hero-main {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-soft);
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 1.5rem;
+      line-height: 1.3;
+      font-weight: 800;
+    }
+
+    .hero-text {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      max-width: 580px;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge-ghost {
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px dashed rgba(94, 234, 212, 0.4);
+      color: #a5f3fc;
+      background: rgba(14, 116, 144, 0.15);
+      font-size: 0.76rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+
+    .metric-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .metric-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: var(--accent-strong);
+    }
+
+    .meter {
+      width: 100%;
+      height: 8px;
+      background: rgba(148, 163, 184, 0.24);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .meter span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #34d399, #22d3ee, #6366f1);
+    }
+
+    .metric-caption {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      line-height: 1.4;
+    }
+
+    .booster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .booster-card {
+      background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.16), rgba(15, 23, 42, 0.7));
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .booster-card h3 {
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .booster-card small {
+      color: var(--text-soft);
+    }
+
+    .checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .checklist li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .check-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 8px;
+      background: rgba(52, 211, 153, 0.2);
+      border: 1px solid rgba(52, 211, 153, 0.5);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: #34d399;
+      margin-top: 2px;
+    }
+
+    .map-plan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .map-plan-card {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 16px;
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.9));
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .map-plan-card h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+    }
+
+    .map-pill {
+      background: rgba(59, 130, 246, 0.14);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #bfdbfe;
+      font-size: 0.72rem;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.04em;
+    }
+
+    .plan-points {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 6px;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .plan-point strong {
+      color: var(--text-main);
+    }
+
     .app {
       width: 100%;
       max-width: 1100px;
@@ -851,6 +1083,31 @@
       </div>
     </header>
 
+    <section class="hero-banner">
+      <div class="hero-main">
+        <div class="hero-eyebrow">Meta ranked actualizada</div>
+        <div class="hero-title">Sube ELO con decisiones rápidas y builds claros</div>
+        <p class="hero-text">
+          Checklist de scouting, prioridades de economía y power spikes por era. Entra a la partida con una hoja de ruta
+          visual y evita perder por detalles sencillos.
+        </p>
+        <div class="hero-badges">
+          <span class="badge-ghost">Plan por era</span>
+          <span class="badge-ghost">Counters directos</span>
+          <span class="badge-ghost">Mental checklist</span>
+        </div>
+        <ul class="checklist" style="margin-top: 6px">
+          <li><span class="check-icon">✓</span> Detecta el plan rival en 2 minutos: edificio militar + muros.</li>
+          <li><span class="check-icon">✓</span> Alinea tu eco con army: granjas vs caballería, madera/oro vs arqueros.</li>
+          <li><span class="check-icon">✓</span> Presiona en tu pico y no cuando el rival tiene upgrades gratis.</li>
+        </ul>
+      </div>
+      <div class="hero-grid" id="momentumMeters"></div>
+    </section>
+
+    <div class="booster-grid" id="boosterGrid"></div>
+    <div class="map-plan-grid" id="mapPlanGrid"></div>
+
     <nav class="tabs">
       <button class="tab-btn active" data-tab="builds">
         <span class="icon">⚔️</span>
@@ -1320,6 +1577,89 @@
     // Helpers
     const qs = (sel) => document.querySelector(sel);
     const qsa = (sel) => Array.from(document.querySelectorAll(sel));
+
+    const momentumMeters = [
+      {
+        title: "Eco sin idle",
+        value: 86,
+        caption: "Mantén el TC con &lt;10s de idle antes de Castle."
+      },
+      {
+        title: "Scouting útil",
+        value: 78,
+        caption: "Ve madera, oro y muros rival antes del 4:30 para leer el plan."
+      },
+      {
+        title: "Transición limpia",
+        value: 83,
+        caption: "Añade el 2.º campamento de madera y 8-10 granjas antes de 2.º jabalí."
+      },
+      {
+        title: "Micro en fights",
+        value: 80,
+        caption: "Pelea en colina y evita pelear sin tus upgrades clave."
+      }
+    ];
+
+    const boosterCards = [
+      {
+        title: "Salida segura",
+        icon: "🛡️",
+        badge: "Dark Age",
+        items: [
+          "Cola aldeanos hasta min 8 y lorea sin perder HP.",
+          "2 casas + muro ligero antes de min 4 si ves forward.",
+          "Scout en diagonal: ovejas, oro, piedra y base rival."
+        ]
+      },
+      {
+        title: "Castillos con tempo",
+        icon: "🏇",
+        badge: "Feudal/Castle",
+        items: [
+          "No boomees sin army: 1-2 establos/archerías activos.",
+          "Sube con 3-4 aldeanos a oro si vas caballería, 6-7 si vas arqueros.",
+          "Si tomas colina, coloca TC ofensivo o torre defensiva inmediata."
+        ]
+      },
+      {
+        title: "Cierre de partida",
+        icon: "🚀",
+        badge: "Imperial",
+        items: [
+          "Trebuchets primero, luego elige raids (hussar/eagles) o push lento.",
+          "Divide army en 2 grupos para forzar multitarea rival.",
+          "Controla reliquias y trade; sin oro extra no hay late game."
+        ]
+      }
+    ];
+
+    const mapPlans = [
+      {
+        icon: "⚡",
+        title: "Mapas abiertos (Arabia)",
+        badge: "Presiona temprano",
+        early: "Scouts o arqueros con hit & run; niega madera expuesta.",
+        mid: "Transition a 3 TC solo si hiciste daño; si no, full presión.",
+        late: "Cierra con trebs + raids de hussar. Evita peleas frontales largas."
+      },
+      {
+        icon: "🛡️",
+        title: "Mapas cerrados (Arena)",
+        badge: "Power spike Castle",
+        early: "FC con 1-2 monasterios o siege. Prepara piedra para castillo defensivo.",
+        mid: "Monjes + siege o gunpowder para romper muros. Toma reliquias rápido.",
+        late: "Imperial con conscripción, treb y presión constante en 2 frentes."
+      },
+      {
+        icon: "🌊",
+        title: "Mapas híbridos/agua",
+        badge: "Control de docks",
+        early: "Dock minuto 2:30-3:00 y 5-6 barcos de pesca. Scoutea si el rival ignora agua.",
+        mid: "Si ganas agua, saca fire/galley y niega pesca. Si la pierdes, all-in tierra con torres.",
+        late: "Docks extra en Castle/Imp para mantener navy + land army sincronizados."
+      }
+    ];
 
     // === DATA: BUILD ORDERS (resumen hasta Imperial) ===
     const buildOrders = [
@@ -2954,6 +3294,73 @@
       }
     }
 
+    function renderMomentumMeters() {
+      const container = qs("#momentumMeters");
+      if (!container) return;
+
+      container.innerHTML = "";
+
+      momentumMeters.forEach((m) => {
+        const card = document.createElement("div");
+        card.className = "metric-card";
+        card.innerHTML = `
+          <div class="metric-top">
+            <span>${m.title}</span>
+            <span class="metric-value">${m.value}%</span>
+          </div>
+          <div class="meter"><span style="width:${m.value}%"></span></div>
+          <div class="metric-caption">${m.caption}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderBoosters() {
+      const grid = qs("#boosterGrid");
+      if (!grid) return;
+
+      grid.innerHTML = "";
+
+      boosterCards.forEach((b) => {
+        const card = document.createElement("div");
+        card.className = "booster-card";
+        card.innerHTML = `
+          <h3>${b.icon} ${b.title}</h3>
+          <small>${b.badge}</small>
+          <ul class="checklist">
+            ${b.items
+              .map((i) => `<li><span class="check-icon">✓</span>${i}</li>`)
+              .join("")}
+          </ul>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderMapPlans() {
+      const grid = qs("#mapPlanGrid");
+      if (!grid) return;
+
+      grid.innerHTML = "";
+
+      mapPlans.forEach((p) => {
+        const card = document.createElement("div");
+        card.className = "map-plan-card";
+        card.innerHTML = `
+          <div style="display:flex; justify-content: space-between; align-items: center; gap: 6px;">
+            <h4>${p.icon} ${p.title}</h4>
+            <span class="map-pill">${p.badge}</span>
+          </div>
+          <div class="plan-points">
+            <div class="plan-point"><strong>Inicio:</strong> ${p.early}</div>
+            <div class="plan-point"><strong>Medio:</strong> ${p.mid}</div>
+            <div class="plan-point"><strong>Final:</strong> ${p.late}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
     // Notas
     function initNotes() {
       const textarea = qs("#notesTextarea");
@@ -2976,6 +3383,9 @@
     function initApp() {
       setupTheme();
       setupTabs();
+      renderMomentumMeters();
+      renderBoosters();
+      renderMapPlans();
       initBuilds();
       initMatchups();
       initCivExplorer();
