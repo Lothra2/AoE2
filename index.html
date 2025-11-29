@@ -1,0 +1,2581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Age of Empires II – Guía Rápida</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-elevated: #0f172a;
+      --bg-soft: #111827;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.12);
+      --accent-strong: #4ade80;
+      --text-main: #f9fafb;
+      --text-soft: #9ca3af;
+      --border-soft: rgba(148, 163, 184, 0.4);
+      --danger: #f97373;
+      --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.8);
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --transition-fast: 0.18s ease-out;
+    }
+
+    [data-theme="light"] {
+      --bg: #f1f5f9;
+      --bg-elevated: #ffffff;
+      --bg-soft: #e5e7eb;
+      --text-main: #020617;
+      --text-soft: #4b5563;
+      --border-soft: rgba(148, 163, 184, 0.5);
+      --shadow-soft: 0 16px 30px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 50%, #000 90%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1100px;
+      background: radial-gradient(circle at top left, #0b1220, #020617 55%);
+      border-radius: 24px;
+      padding: 16px 16px 18px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      backdrop-filter: blur(18px);
+    }
+
+    @media (min-width: 900px) {
+      .app {
+        padding: 20px 22px 22px;
+      }
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .title-pill {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(34, 197, 94, 0.6);
+      color: var(--accent-strong);
+      background: linear-gradient(
+        135deg,
+        rgba(34, 197, 94, 0.16),
+        rgba(56, 189, 248, 0.08)
+      );
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag-badge {
+      font-size: 0.72rem;
+      color: var(--accent-strong);
+      background: rgba(22, 163, 74, 0.14);
+      border-radius: var(--radius-pill);
+      padding: 4px 10px;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .toggle-theme {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-soft);
+      background: rgba(15, 23, 42, 0.8);
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .toggle-theme:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .toggle-theme span.icon {
+      font-size: 1rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.9),
+        rgba(15, 23, 42, 0.7)
+      );
+      border-radius: var(--radius-pill);
+      padding: 4px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      flex: 1;
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-size: 0.8rem;
+      border: none;
+      background: transparent;
+      color: var(--text-soft);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .tab-btn span.icon {
+      font-size: 1rem;
+    }
+
+    .tab-btn.active {
+      background: radial-gradient(
+        circle at top left,
+        rgba(34, 197, 94, 0.18),
+        rgba(37, 99, 235, 0.2)
+      );
+      color: var(--text-main);
+      box-shadow:
+        0 0 0 1px rgba(34, 197, 94, 0.4),
+        0 10px 20px rgba(15, 23, 42, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .tab-btn small {
+      text-transform: uppercase;
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+    }
+
+    main {
+      display: grid;
+      gap: 14px;
+    }
+
+    .tab {
+      display: none;
+    }
+
+    .tab.active {
+      display: block;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 750px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: radial-gradient(
+        circle at top left,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.92)
+      );
+      border-radius: var(--radius-lg);
+      padding: 12px 12px 14px;
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.85);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      opacity: 0.14;
+      background: radial-gradient(
+        circle at top right,
+        rgba(34, 197, 94, 0.3),
+        transparent 55%
+      );
+      pointer-events: none;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-header-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-header-title span.icon {
+      color: var(--accent-strong);
+      font-size: 1.1rem;
+    }
+
+    .card-header-subtitle {
+      font-size: 0.76rem;
+      color: var(--text-soft);
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-soft);
+      white-space: nowrap;
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .card-body {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-soft);
+    }
+
+    select,
+    input[type="text"] {
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      padding: 7px 11px;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      outline: none;
+      width: 100%;
+      appearance: none;
+      position: relative;
+    }
+
+    select:focus,
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.5);
+    }
+
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text-soft);
+    }
+
+    .chip {
+      border-radius: var(--radius-pill);
+      padding: 3px 8px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chip strong {
+      color: var(--accent-strong);
+      font-size: 0.76rem;
+    }
+
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-left: 2px;
+      max-height: 230px;
+      overflow-y: auto;
+      margin-top: 2px;
+    }
+
+    .steps-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      font-size: 0.8rem;
+      padding: 5px 7px;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+    }
+
+    .step-index {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: linear-gradient(
+        135deg,
+        var(--accent),
+        rgba(37, 99, 235, 0.9)
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #0b1120;
+    }
+
+    .step-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .step-main {
+      font-weight: 500;
+    }
+
+    .step-detail {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+    }
+
+    .tips-box {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 12px;
+      padding: 7px 9px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      font-size: 0.78rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .tips-box span.icon {
+      color: var(--accent-strong);
+      margin-top: 1px;
+    }
+
+    .tips-box strong {
+      color: var(--accent-strong);
+      font-size: 0.78rem;
+    }
+
+    .matchup-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 850px) {
+      .matchup-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .matchup-result {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.8rem;
+    }
+
+    .matchup-section {
+      border-radius: 10px;
+      padding: 7px 9px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+    }
+
+    .matchup-section strong {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-strong);
+    }
+
+    .matchup-section p {
+      margin-top: 2px;
+      color: var(--text-soft);
+      font-size: 0.78rem;
+    }
+
+    .civ-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .filter-btn {
+      border-radius: var(--radius-pill);
+      padding: 3px 8px;
+      font-size: 0.72rem;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-soft);
+      cursor: pointer;
+      transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .filter-btn.active {
+      background: rgba(34, 197, 94, 0.16);
+      color: var(--accent-strong);
+      border-color: rgba(34, 197, 94, 0.7);
+    }
+
+    .civ-search {
+      margin-bottom: 6px;
+    }
+
+    .civ-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 6px;
+      max-height: 190px;
+      overflow-y: auto;
+      padding-top: 2px;
+    }
+
+    .civ-card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 10px;
+      padding: 6px 7px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      cursor: pointer;
+      transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .civ-card:hover {
+      border-color: rgba(34, 197, 94, 0.7);
+      transform: translateY(-1px);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .civ-name {
+      font-weight: 600;
+    }
+
+    .civ-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-strong);
+    }
+
+    .civ-note {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      max-height: 280px;
+      resize: vertical;
+      border-radius: 14px;
+      border: 1px solid rgba(55, 65, 81, 0.95);
+      background: rgba(15, 23, 42, 0.96);
+      padding: 8px 10px;
+      color: var(--text-main);
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.5);
+    }
+
+    .notes-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      padding: 6px 10px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text-soft);
+      font-size: 0.76rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn.primary {
+      border-color: rgba(34, 197, 94, 0.7);
+      background: linear-gradient(
+        135deg,
+        rgba(34, 197, 94, 0.2),
+        rgba(56, 189, 248, 0.2)
+      );
+      color: var(--accent-strong);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+    }
+
+    .btn span.icon {
+      font-size: 1rem;
+    }
+
+    footer {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .footer-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .footer-pill {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 3px 8px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .age-timeline {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      font-size: 0.7rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .age-chip {
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-soft);
+    }
+
+    .age-chip.active {
+      border-color: rgba(34, 197, 94, 0.8);
+      color: var(--accent-strong);
+      background: rgba(34, 197, 94, 0.16);
+    }
+
+    .age-chip span {
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .matchup-dual-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 8px;
+    }
+
+    @media (max-width: 650px) {
+      .matchup-dual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .small-label {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    /* Civ detail and stats */
+    .civ-detail {
+      border-radius: 12px;
+      padding: 7px 9px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .civ-detail h4 {
+      font-size: 0.82rem;
+      margin-bottom: 2px;
+    }
+
+    .civ-detail-row {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .civ-detail-row span.label {
+      color: var(--accent-strong);
+      font-weight: 500;
+      font-size: 0.75rem;
+    }
+
+    .civ-detail-row span.value {
+      color: var(--text-soft);
+      font-size: 0.75rem;
+    }
+
+    .stats-grid {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .stat-row span.label {
+      width: 65px;
+      text-transform: uppercase;
+    }
+
+    .stat-bar {
+      flex: 1;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(31, 41, 55, 0.9);
+      overflow: hidden;
+    }
+
+    .stat-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(
+        90deg,
+        rgba(34, 197, 94, 0.2),
+        rgba(34, 197, 94, 0.9)
+      );
+    }
+
+    .stat-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 3px;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      flex-wrap: wrap;
+    }
+
+    .stat-meta span {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 2px 6px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .picks-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pick-card {
+      border-radius: 10px;
+      padding: 7px 9px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      font-size: 0.78rem;
+    }
+
+    .pick-card-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 3px;
+    }
+
+    .pick-card-title span.name {
+      font-weight: 600;
+      color: var(--accent-strong);
+    }
+
+    .pick-card-ages {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 3px;
+      font-size: 0.75rem;
+    }
+
+    .pick-card-ages strong {
+      color: var(--accent-strong);
+      font-size: 0.72rem;
+    }
+
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="app">
+    <header>
+      <div class="title-block">
+        <div class="title">
+          AOE2 Battle Desk
+          <span class="title-pill">Builds &amp; Matchups</span>
+        </div>
+        <div class="subtitle">
+          Guía rápida para tus ranked: órdenes de construcción hasta Imperial, respuestas por civ rival y tu mejor pick.
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="tag-badge">1v1 · Team · Arabia / Arena</div>
+        <button class="toggle-theme" id="themeToggle">
+          <span class="icon">🌙</span>
+          <span>Modo oscuro</span>
+        </button>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="builds">
+        <span class="icon">⚔️</span>
+        <div>
+          Build Orders
+          <br />
+          <small>Dark a Imperial</small>
+        </div>
+      </button>
+      <button class="tab-btn" data-tab="matchups">
+        <span class="icon">🎯</span>
+        <div>
+          Matchups
+          <br />
+          <small>Civ rival y plan</small>
+        </div>
+      </button>
+      <button class="tab-btn" data-tab="myciv">
+        <span class="icon">🏆</span>
+        <div>
+          Mi Civ ideal
+          <br />
+          <small>Vs rival</small>
+        </div>
+      </button>
+      <button class="tab-btn" data-tab="notes">
+        <span class="icon">📝</span>
+        <div>
+          Notas
+          <br />
+          <small>Tus ajustes</small>
+        </div>
+      </button>
+    </nav>
+
+    <main>
+      <!-- TAB: BUILDS -->
+      <section id="tab-builds" class="tab active">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-header-title">
+                  <span class="icon">⚔️</span>
+                  Órdenes de construcción
+                </div>
+                <div class="card-header-subtitle">
+                  Elige un build y sigue el plan desde Dark hasta Imperial.
+                </div>
+              </div>
+              <span class="pill">Dark - Feudal - Castle - Imperial</span>
+            </div>
+            <div class="card-body">
+              <div class="field-group">
+                <label for="buildSelect">Build principal</label>
+                <select id="buildSelect"></select>
+              </div>
+
+              <div class="age-timeline">
+                <span class="small-label">Eras cubiertas:</span>
+                <div class="age-chip active"><span>Ⅰ</span>Dark</div>
+                <div class="age-chip active"><span>Ⅱ</span>Feudal</div>
+                <div class="age-chip active"><span>Ⅲ</span>Castle</div>
+                <div class="age-chip active"><span>Ⅳ</span>Imperial</div>
+              </div>
+
+              <div class="info-row" id="buildInfoRow"></div>
+              <ul class="steps-list" id="stepsList"></ul>
+
+              <div class="tips-box" id="buildTipsBox">
+                <span class="icon">💡</span>
+                <div>
+                  <strong>Tip clave:</strong>
+                  <span id="buildTipText">
+                    Mantén la ciudad sin pararse. Cada aldeano ocioso es comida perdida.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-header-title">
+                  <span class="icon">📊</span>
+                  Referencias rápidas
+                </div>
+                <div class="card-header-subtitle">
+                  Timings por era, eco y plan de juego hasta Imperial.
+                </div>
+              </div>
+              <span class="pill" id="buildTypePill">Estándar</span>
+            </div>
+            <div class="card-body">
+              <div class="matchup-section" style="margin-bottom: 6px">
+                <strong>Timings objetivo</strong>
+                <p id="buildTimings">
+                  Feudal: 10:30-11:00. Castle: 16:30-17:30. Imperial según presión.
+                </p>
+              </div>
+              <div class="matchup-section" style="margin-bottom: 6px">
+                <strong>Distribución de aldeanos</strong>
+                <p id="buildEco">
+                  Dark: 6 en ovejas, 4 madera, 3 jabalí, resto comida. Feudal: añade oro si vas a arqueros o knights.
+                </p>
+              </div>
+              <div class="matchup-section" style="margin-bottom: 6px">
+                <strong>Cuándo usar este build</strong>
+                <p id="buildUsage">
+                  Bueno para partidas estándar en Arabia contra civs de caballería o abiertas, donde puedas hacer presión rápida.
+                </p>
+              </div>
+              <div class="matchup-section">
+                <strong>Plan en Imperial</strong>
+                <p id="buildImpPlan">
+                  Pasa a Imperial cuando tengas eco sólida, usa tu power spike con upgrades finales y presión con siege pesado.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: MATCHUPS -->
+      <section id="tab-matchups" class="tab">
+        <div class="matchup-grid">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-header-title">
+                  <span class="icon">🎯</span>
+                  Guía de matchups
+                </div>
+                <div class="card-header-subtitle">
+                  Elige la civ rival o su plan y el app te dice cómo responder.
+                </div>
+              </div>
+              <span class="pill">Respuesta táctica</span>
+            </div>
+            <div class="card-body">
+              <div class="matchup-dual-grid">
+                <div>
+                  <div class="field-group" style="margin-bottom: 8px">
+                    <label for="enemyCivSelect">Civilización del rival</label>
+                    <select id="enemyCivSelect"></select>
+                  </div>
+                  <div class="matchup-section" style="margin-bottom: 6px">
+                    <strong>Lo peligroso de esta civ</strong>
+                    <p id="enemyCivDanger">
+                      Esta civ destaca por arqueros fuertes y buen control de mapa.
+                    </p>
+                  </div>
+                  <div class="matchup-section" style="margin-bottom: 6px">
+                    <strong>Mejor defensa</strong>
+                    <p id="enemyCivDefense">
+                      Usa escaramuzas con buena eco de madera y algo de caballería ligera para limpiar.
+                    </p>
+                  </div>
+                  <div class="matchup-section">
+                    <strong>Mejor ataque</strong>
+                    <p id="enemyCivAttack">
+                      Castiga sus maderas y oro con presión temprana y control de colinas.
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="field-group" style="margin-bottom: 8px">
+                    <label for="enemyPlanSelect">Plan del rival</label>
+                    <select id="enemyPlanSelect"></select>
+                  </div>
+                  <div class="matchup-result">
+                    <div class="matchup-section">
+                      <strong>Army recomendado</strong>
+                      <p id="matchupCounters">
+                        Usa escaramuzas, caballería ligera y presión temprana para castigar arqueros.
+                      </p>
+                    </div>
+                    <div class="matchup-section">
+                      <strong>Tecnologías clave</strong>
+                      <p id="matchupTechs">
+                        Armadura de caballería, Ballistics, Thumb Ring según composición.
+                      </p>
+                    </div>
+                    <div class="matchup-section">
+                      <strong>Plan de juego</strong>
+                      <p id="matchupPlan">
+                        Juega agresivo en Feudal, niega oro y madera. No dejes que llegue gratis a ballesteros con upgrades completos.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="matchup-section" style="margin-top: 8px">
+                <strong>Resumen rápido de la civ rival</strong>
+                <p id="enemyCivSummary">
+                  Selecciona una civ para ver su estilo, unidades fuertes y cómo suele ganar la partida.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-header-title">
+                  <span class="icon">🏰</span>
+                  Civs por estilo
+                </div>
+                <div class="card-header-subtitle">
+                  Busca rápido qué hace fuerte a cada civilización.
+                </div>
+              </div>
+              <span class="pill">Draft y picks</span>
+            </div>
+            <div class="card-body">
+              <div class="civ-search">
+                <input
+                  type="text"
+                  id="civSearchInput"
+                  placeholder="Buscar civ (ej: Franks, Mayans)"
+                />
+              </div>
+              <div class="civ-filters">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="archer">Arqueros</button>
+                <button class="filter-btn" data-filter="cavalry">Caballería</button>
+                <button class="filter-btn" data-filter="infantry">
+                  Infantería / águilas
+                </button>
+                <button class="filter-btn" data-filter="hybrid">Híbridas</button>
+                <button class="filter-btn" data-filter="late">Late game</button>
+              </div>
+              <div class="civ-list" id="civList"></div>
+
+              <div class="civ-detail" id="civDetailPanel">
+                <h4>Detalle de civilización</h4>
+                <div class="civ-detail-row">
+                  <span class="label">Civ:</span>
+                  <span class="value" id="detailName">Selecciona una civ.</span>
+                </div>
+                <div class="civ-detail-row">
+                  <span class="label">Bonos:</span>
+                  <span class="value" id="detailBonuses">Verás aquí los bonos principales.</span>
+                </div>
+                <div class="civ-detail-row">
+                  <span class="label">Unidades fuertes:</span>
+                  <span class="value" id="detailUnitsStrong">-</span>
+                </div>
+                <div class="civ-detail-row">
+                  <span class="label">Unidades débiles:</span>
+                  <span class="value" id="detailUnitsWeak">-</span>
+                </div>
+                <div class="civ-detail-row">
+                  <span class="label">Edificios fuertes:</span>
+                  <span class="value" id="detailBuildingsStrong">-</span>
+                </div>
+                <div class="civ-detail-row">
+                  <span class="label">Edificios débiles:</span>
+                  <span class="value" id="detailBuildingsWeak">-</span>
+                </div>
+                <div class="civ-detail-row">
+                  <span class="label">Civs que la counterean:</span>
+                  <span class="value" id="detailCivCounters">-</span>
+                </div>
+                <div class="civ-detail-row">
+                  <span class="label">Plan de juego:</span>
+                  <span class="value" id="detailGameplan">-</span>
+                </div>
+
+                <div class="stats-grid" id="detailStats"></div>
+                <div class="stat-meta">
+                  <span id="detailWinrate">Winrate: -</span>
+                  <span id="detailUso">Uso: -</span>
+                  <span id="detailDificultad">Dificultad: -/10</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: MI CIV IDEAL -->
+      <section id="tab-myciv" class="tab">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-header-title">
+                  <span class="icon">🏆</span>
+                  Mi civ ideal vs rival
+                </div>
+                <div class="card-header-subtitle">
+                  Elige la civ del rival y recibe 3 mejores picks con plan por edad.
+                </div>
+              </div>
+              <span class="pill">Draft inteligente</span>
+            </div>
+            <div class="card-body">
+              <div class="field-group" style="margin-bottom: 8px">
+                <label for="myCivEnemySelect">Civ del rival</label>
+                <select id="myCivEnemySelect"></select>
+              </div>
+
+              <div class="matchup-section" style="margin-bottom: 6px">
+                <strong>Cómo juega esta civ</strong>
+                <p id="myCivEnemySummary">
+                  Aquí verás una descripción rápida del estilo de la civ rival y su condición de victoria típica.
+                </p>
+              </div>
+
+              <div class="matchup-section">
+                <strong>Plan general contra esta civ</strong>
+                <p id="myCivEnemyPlan">
+                  Selecciona una civ rival para ver qué debes evitar, qué edades son más peligrosas y en qué momento quieres pelear.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-header-title">
+                  <span class="icon">🧬</span>
+                  Mejores picks para counterear
+                </div>
+                <div class="card-header-subtitle">
+                  Top 3 civs recomendadas y qué hacer en cada era.
+                </div>
+              </div>
+              <span class="pill">Meta orientativo</span>
+            </div>
+            <div class="card-body">
+              <div class="picks-grid" id="myCivPicks"></div>
+              <div class="tips-box" style="margin-top: 8px">
+                <span class="icon">⚠️</span>
+                <div>
+                  <strong>Importante:</strong>
+                  Esto te da una guía meta simple. Tu micro, decisiones y mapa siguen siendo clave.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: NOTES -->
+      <section id="tab-notes" class="tab">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-header-title">
+                  <span class="icon">📝</span>
+                  Notas de estrategia
+                </div>
+                <div class="card-header-subtitle">
+                  Ajusta builds y planes según tu estilo.
+                </div>
+              </div>
+              <span class="pill">Guardado local</span>
+            </div>
+            <div class="card-body">
+              <div class="field-group">
+                <label for="notesTextarea">Tus notas</label>
+                <textarea
+                  id="notesTextarea"
+                  placeholder="Ejemplo: Con Mayans en Arabia, abrir siempre archer rush. Evitar peleas largas vs paladines..."
+                ></textarea>
+              </div>
+              <div class="notes-footer">
+                <div>Se guarda en este navegador, sin conexión.</div>
+                <div style="display: flex; gap: 6px">
+                  <button class="btn primary" id="saveNotesBtn">
+                    <span class="icon">💾</span>
+                    <span>Guardar</span>
+                  </button>
+                  <button class="btn" id="clearNotesBtn">
+                    <span class="icon">🧹</span>
+                    <span>Borrar</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-header-title">
+                  <span class="icon">⚡</span>
+                  Recordatorios clave
+                </div>
+                <div class="card-header-subtitle">
+                  Cosas simples que ganan partidas.
+                </div>
+              </div>
+              <span class="pill">Mental checklist</span>
+            </div>
+            <div class="card-body">
+              <ul class="steps-list">
+                <li>
+                  <div class="step-index">1</div>
+                  <div class="step-text">
+                    <div class="step-main">No parar el TC</div>
+                    <div class="step-detail">
+                      Siempre produce aldeanos hasta mínimo 100 en late game.
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-index">2</div>
+                  <div class="step-text">
+                    <div class="step-main">Explora al rival temprano</div>
+                    <div class="step-detail">
+                      Mira oro, madera y qué edificios militares hace.
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-index">3</div>
+                  <div class="step-text">
+                    <div class="step-main">Alinea eco con army</div>
+                    <div class="step-detail">
+                      Arqueros usan más madera y oro. Caballería más granjas y oro.
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-index">4</div>
+                  <div class="step-text">
+                    <div class="step-main">No técnees todo</div>
+                    <div class="step-detail">
+                      Prioriza armadura, ataque y upgrades del army principal.
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-index">5</div>
+                  <div class="step-text">
+                    <div class="step-main">Pusha cuando tengas pico</div>
+                    <div class="step-detail">
+                      Si tienes más army o mejores upgrades, ataca antes de que el rival se recupere.
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-left">
+        <div class="footer-pill">Dark Age: 3 casas y cola aldeanos</div>
+        <div class="footer-pill">Siempre lleva lanceros vs caballería</div>
+      </div>
+      <div>Tip: revisa la civ rival antes de la primera gran pelea.</div>
+    </footer>
+  </div>
+
+  <script>
+    // Helpers
+    const qs = (sel) => document.querySelector(sel);
+    const qsa = (sel) => Array.from(document.querySelectorAll(sel));
+
+    // === DATA: BUILD ORDERS (resumen hasta Imperial) ===
+    const buildOrders = [
+      {
+        id: "scout-rush",
+        name: "Feudal Scouts a Knights e Imperial",
+        type: "Feudal agresivo - Caballería",
+        civs: "Franks, Huns, Mongols, Magyars, Lithuanians...",
+        timings:
+          "Feudal: 10:30-11:00 con 20-22 aldeanos. Castle: 16:30-17:30. Imperial: 27-30 si hiciste daño.",
+        eco:
+          "Dark: 6 ovejas/ciervos, 4 madera, 1 jabalí, 3 jabalí/ovejas, 4 berries. Feudal: más granjas y 2-3 aldeanos a oro.",
+        usage:
+          "Muy bueno en mapas abiertos. Ideal contra civs de arqueros o rivales que quieren Fast Castle lento.",
+        impPlan:
+          "Pasa a Imperial con 3 TCs activos. Transición a paladín y hussar para raids, añade rams/trebs.",
+        tip:
+          "Si no haces daño en Feudal, no te quedes solo en scouts. Sube a Castle y cambia rápido a knights con upgrades.",
+        infoChips: [
+          { label: "Aldeanos Feudal", value: "20-22 + Loom" },
+          { label: "Pico en Castle", value: "2 establos de knights" },
+          { label: "Power spike Imperial", value: "Paladines + hussars" }
+        ],
+        steps: [
+          {
+            main: "Cola aldeano, 2 aldeanos hacen 2 casas y van a ovejas.",
+            detail: "El scout explora ovejas, jabalí y oro rápido."
+          },
+          {
+            main: "6 aldeanos a ovejas.",
+            detail: "Dark limpio con comida estable."
+          },
+          {
+            main: "4 aldeanos a madera.",
+            detail: "Primer campamento maderero bien pegado al bosque."
+          },
+          {
+            main: "Un aldeano lurea el primer jabalí.",
+            detail: "Tráelo debajo del TC sin perder aldeano."
+          },
+          {
+            main: "3 aldeanos más a jabalí/ovejas.",
+            detail: "No dejes al TC parado."
+          },
+          {
+            main: "4 aldeanos a berries con molino.",
+            detail: "Segundo punto de comida estable."
+          },
+          {
+            main: "Siguientes aldeanos a comida y madera extra.",
+            detail: "Busca 7-8 en madera antes de Feudal."
+          },
+          {
+            main: "Sube a Feudal con 20-22 aldeanos + Loom.",
+            detail: "Cierra tu base con muros ligeros."
+          },
+          {
+            main: "En subida a Feudal, manda 2 aldeanos a oro.",
+            detail: "Para scouts y upgrades."
+          },
+          {
+            main: "En Feudal, construye establo y herrería.",
+            detail: "Saca 3-5 scouts y mejora ataque/armadura de caballería."
+          },
+          {
+            main: "Presiona eco rival con scouts.",
+            detail: "Pega maderas y oro, evita luchar bajo TC."
+          },
+          {
+            main: "Mientras presionas, añade granjas y más oro.",
+            detail: "Prepara recursos para Castle."
+          },
+          {
+            main: "Sube a Castle con scouts vivos.",
+            detail: "Luego pásalos a light cav."
+          },
+          {
+            main: "En Castle, levanta 2 establos y spamea knights.",
+            detail: "Bloodlines, +2 ataque y +2 armadura."
+          },
+          {
+            main: "Añade 2º y 3º TC en recursos seguros.",
+            detail: "Boom sin dejar de raidear."
+          },
+          {
+            main: "Con 110-120 aldeanos, prepara Imperial.",
+            detail: "Pausa un poco producción si hace falta."
+          },
+          {
+            main: "En Imperial, paladín + hussar + siege.",
+            detail: "Raids con hussars, paladines en peleas grandes."
+          }
+        ]
+      },
+      {
+        id: "fc-knights",
+        name: "Fast Castle Knights a Paladín",
+        type: "Fast Castle - Boom caballería",
+        civs: "Franks, Lithuanians, Burgundians, Teutons...",
+        timings:
+          "Feudal: 14:30-15:30. Castle: 17:30-18:30 con 27-28 aldeanos. Imperial: 28-32.",
+        eco:
+          "Dark estándar, Feudal corto, Castle con 2-3 TCs y muchas granjas.",
+        usage:
+          "Perfecto si puedes cerrar base. Castiga rivales que no presionan en Feudal.",
+        impPlan:
+          "Paladines + trebs. Controla colinas y trade si la partida se alarga.",
+        tip:
+          "Si ves rush fuerte en Feudal, mete army en Feudal y ajusta el FC, no mueras boom-only.",
+        infoChips: [
+          { label: "Aldeanos Castle", value: "27-28" },
+          { label: "TCs en Castle", value: "2-3 TCs rápido" },
+          { label: "Power spike Imperial", value: "Paladín + trebs" }
+        ],
+        steps: [
+          {
+            main: "6 aldeanos a ovejas, scout explora jabalí, oro y madera.",
+            detail: ""
+          },
+          {
+            main: "4 aldeanos a madera.",
+            detail: "Campamento bien pegado al bosque."
+          },
+          {
+            main: "3 aldeanos a jabalí.",
+            detail: "Lure normal."
+          },
+          {
+            main: "4 aldeanos a berries.",
+            detail: "Eco extra de comida."
+          },
+          {
+            main: "3 aldeanos a ovejas/jabalí.",
+            detail: ""
+          },
+          {
+            main: "Resto a madera extra hasta 7-8 en total.",
+            detail: "Necesitas madera para granjas, mercado y TCs."
+          },
+          {
+            main: "Sube a Feudal con 27-28 aldeanos + Loom.",
+            detail: "Empieza muros mientras subes."
+          },
+          {
+            main: "En subida a Feudal, manda 2-3 aldeanos a oro.",
+            detail: ""
+          },
+          {
+            main: "En Feudal, levanta herrería y mercado.",
+            detail: "Cliquear Castle rápido."
+          },
+          {
+            main: "Al llegar a Castle, construye 2 establos.",
+            detail: "Knights sin parar."
+          },
+          {
+            main: "Haz Bloodlines y upgrades de caballería.",
+            detail: ""
+          },
+          {
+            main: "Añade 2º y 3º TC.",
+            detail: "Boom fuerte mientras presionas con knights."
+          },
+          {
+            main: "Sube a 100-110 aldeanos.",
+            detail: "Eco lista para Imperial."
+          },
+          {
+            main: "Cliquea Imperial, prepara castillo y siege.",
+            detail: ""
+          },
+          {
+            main: "En Imperial, investiga Paladín y siege pesado.",
+            detail: "Rompe castillos y TCs enemigos."
+          }
+        ]
+      },
+      {
+        id: "archer-rush",
+        name: "Archer Rush a Arbalest + Siege",
+        type: "Feudal de rango - Late fuerte",
+        civs: "Mayans, Britons, Ethiopians, Vietnamese...",
+        timings:
+          "Feudal: 10:30-11:00. Castle: 16:30-18:00. Imperial: 30-33 con presión constante.",
+        eco:
+          "Dark con mucha madera. Feudal con 4-6 a oro para 2 arquerías. Castle con muchas granjas.",
+        usage:
+          "Ideal contra civs de caballería si cierras bien tus recursos. Muy buen control de mapa.",
+        impPlan:
+          "Arbalest + chemistry + bracer. Siege detrás (onagers o bombard). Pelea siempre en colinas.",
+        tip:
+          "No regales tus arqueros. Kitéa y usa choke points.",
+        infoChips: [
+          { label: "Aldeanos Feudal", value: "22-23" },
+          { label: "Arquerías", value: "2 en Feudal" },
+          { label: "Power spike Imperial", value: "Arbalest + siege" }
+        ],
+        steps: [
+          {
+            main: "6 aldeanos a ovejas.",
+            detail: "Scout busca ciervos, oro y rival."
+          },
+          {
+            main: "4 aldeanos a madera.",
+            detail: ""
+          },
+          {
+            main: "3 aldeanos a jabalí.",
+            detail: ""
+          },
+          {
+            main: "4 aldeanos a berries.",
+            detail: ""
+          },
+          {
+            main: "3 aldeanos extra a madera.",
+            detail: "Total 7-8 en madera."
+          },
+          {
+            main: "Sube a Feudal con 22-23 aldeanos + Loom.",
+            detail: "Muros ligeros."
+          },
+          {
+            main: "En subida, manda 4 aldeanos a oro.",
+            detail: ""
+          },
+          {
+            main: "En Feudal, construye 2 arquerías y herrería.",
+            detail: "Fletching y arqueros sin parar."
+          },
+          {
+            main: "Acumula 10-12 arqueros y presiona maderas y oro.",
+            detail: ""
+          },
+          {
+            main: "Añade granjas para sostener army y subir a Castle.",
+            detail: ""
+          },
+          {
+            main: "En Castle, crossbow + bodkin + ballistics.",
+            detail: "Considera 1-2 mangonels."
+          },
+          {
+            main: "Controla colinas, niega expansiones.",
+            detail: ""
+          },
+          {
+            main: "Cliquea Imperial con eco sólida.",
+            detail: ""
+          },
+          {
+            main: "En Imperial, Arbalest + siege pesado.",
+            detail: "Empuja lentamente con colinas."
+          }
+        ]
+      }
+    ];
+
+    // === DATA: CIVS DETALLADAS (lista amplia, meta simple) ===
+    const civs = [
+      {
+        name: "Aztecs",
+        display: "Aztecas",
+        tag: "infantry",
+        bonuses: [
+          "Unidades militares se entrenan 15% más rápido",
+          "Monjes fuertes y eco de oro sólida",
+          "Más población militar por eco temprana"
+        ],
+        unitsStrong: ["Águilas", "Monjes", "Guerrero Jaguar"],
+        unitsWeak: ["Caballería pesada", "CA", "Gunpowder"],
+        buildingsStrong: ["Cuartel", "Monasterio"],
+        buildingsWeak: ["Docks", "Torre"],
+        civCounters: ["Britons", "Byzantines", "Franks"],
+        gameplan:
+          "Ataca temprano con drush o águilas. Controla reliquias y oro. En Castle mezcla águilas + monjes. En Imperial busca flood de águilas con upgrades completos.",
+        stats: { eco: 8, mil: 9, tec: 8, naval: 2, dificultad: 8, winrate: "52%", uso: "Alta" }
+      },
+      {
+        name: "Berbers",
+        display: "Bereberes",
+        tag: "hybrid",
+        bonuses: [
+          "Scouts, camellos y caballería ligera más baratos",
+          "Barcos más rápidos",
+          "Aldeanos más rápidos en mov."
+        ],
+        unitsStrong: ["Camellos", "Camel Archer", "Genitour"],
+        unitsWeak: ["Infantería pesada", "Arqueros de élite en masa"],
+        buildingsStrong: ["Establo", "Docks"],
+        buildingsWeak: ["Torres", "Castillos mal colocados"],
+        civCounters: ["Mongols", "Britons", "Mayans"],
+        gameplan:
+          "Abusa de movilidad con camellos y camel archers. Ideal en mapas abiertos e híbridos. En Imperial, raids constantes y control de trade.",
+        stats: { eco: 8, mil: 7, tec: 7, naval: 7, dificultad: 5, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Burmese",
+        display: "Birmanos",
+        tag: "infantry",
+        bonuses: [
+          "Tecnologías de monasterio visibles y baratas",
+          "Infantería +1 ataque por edad",
+          "Lanzas más baratas"
+        ],
+        unitsStrong: ["Arambai", "Infantería", "Monjes"],
+        unitsWeak: ["Arqueros", "CA"],
+        buildingsStrong: ["Monasterio", "Cuartel"],
+        buildingsWeak: ["Docks", "Torre"],
+        civCounters: ["Vikings", "Tatars", "Mongols"],
+        gameplan:
+          "Monjes fuertes y infantería con mucho daño. En Castle push de arambai + monjes. En Imperial mezcla caballería y siege para cerrar.",
+        stats: { eco: 7, mil: 8, tec: 8, naval: 2, dificultad: 7, winrate: "48%", uso: "Baja" }
+      },
+      {
+        name: "Celts",
+        display: "Celtas",
+        tag: "infantry",
+        bonuses: [
+          "Infantería más rápida",
+          "Siege más rápido",
+          "Recolección de madera más rápida"
+        ],
+        unitsStrong: ["Woad Raider", "Onagro", "Infantería"],
+        unitsWeak: ["Caballería", "Arqueros de élite"],
+        buildingsStrong: ["Torres", "TC defensivos"],
+        buildingsWeak: ["Docks"],
+        civCounters: ["Franks", "Vikings", "Teutons"],
+        gameplan:
+          "Push de siege + infantería. Muy buenos en peleas grandes y mapas con bosques. Evita guerras de caballería pura.",
+        stats: { eco: 8, mil: 8, tec: 8, naval: 2, dificultad: 5, winrate: "51%", uso: "Media" }
+      },
+      {
+        name: "Gurjaras",
+        display: "Gurjaras",
+        tag: "hybrid",
+        bonuses: [
+          "Animales en molino dan comida a largo plazo",
+          "Camellos fuertes y flexibles",
+          "Unidades montadas con trucos de esquivar daño"
+        ],
+        unitsStrong: ["Shrivamsha Rider", "Chakram Thrower", "Camellos"],
+        unitsWeak: ["Arqueros masivos", "Infantería muy pesada con siege"],
+        buildingsStrong: ["Molino", "Establo"],
+        buildingsWeak: ["Torres"],
+        civCounters: ["Britons", "Mayans", "Byzantines"],
+        gameplan:
+          "Flexible en tierra. Buenos camellos y unidades raras que sorprenden. Raids y movilidad todo el tiempo.",
+        stats: { eco: 7, mil: 8, tec: 8, naval: 2, dificultad: 6, winrate: "49%", uso: "Media" }
+      },
+      {
+        name: "Khmer",
+        display: "Khmer",
+        tag: "hybrid",
+        bonuses: [
+          "No necesitan edificios para avanzar de edad",
+          "Granjas muy fuertes",
+          "Aldeanos se esconden en casas"
+        ],
+        unitsStrong: ["Elefantes", "Escorpiones", "Arquería"],
+        unitsWeak: ["Piques en masa", "CA kiting"],
+        buildingsStrong: ["Casas", "Granjas"],
+        buildingsWeak: ["Torres", "Murallas"],
+        civCounters: ["Vikings", "Britons", "Chinese"],
+        gameplan:
+          "Eco muy fuerte, sobre todo en mapas boom. En Castle/Imp puedes hacer push brutal de elefantes o scorpion deathball.",
+        stats: { eco: 9, mil: 7, tec: 7, naval: 2, dificultad: 4, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Lithuanians",
+        display: "Lituanos",
+        tag: "cavalry",
+        bonuses: [
+          "+150 de alimento inicial",
+          "Reliquias dan +1 ataque a caballería",
+          "Monasterio barato"
+        ],
+        unitsStrong: ["Leitis", "Knights", "Monjes"],
+        unitsWeak: ["Arqueros", "CA masivo"],
+        buildingsStrong: ["Monasterio", "Molino"],
+        buildingsWeak: ["Docks"],
+        civCounters: ["Byzantines", "Turks", "Franks"],
+        gameplan:
+          "Muy buen early gracias a comida extra. Busca reliquias para buffear caballería. Combina monjes + leitis.",
+        stats: { eco: 8, mil: 8, tec: 7, naval: 2, dificultad: 4, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Malay",
+        display: "Malayos",
+        tag: "late",
+        bonuses: [
+          "Subida de edad más barata",
+          "ECOn fuerte en agua",
+          "Karambits baratos"
+        ],
+        unitsStrong: ["Karambit Warrior", "Infantería barata", "Navy"],
+        unitsWeak: ["Caballería pesada", "Arqueros fuertes"],
+        buildingsStrong: ["Docks", "Molino"],
+        buildingsWeak: ["Castillos ofensivos"],
+        civCounters: ["Huns", "Aztecs", "Byzantines"],
+        gameplan:
+          "Brillan en mapas de agua e híbridos. Subidas de edad muy rápidas para sorprender. En Imperial spam de karambits.",
+        stats: { eco: 8, mil: 6, tec: 8, naval: 9, dificultad: 5, winrate: "49%", uso: "Media" }
+      },
+      {
+        name: "Goths",
+        display: "Godos",
+        tag: "infantry",
+        bonuses: [
+          "Infantería muy barata",
+          "Producción rápida de cuarteles",
+          "Caza mejorada"
+        ],
+        unitsStrong: ["Huskarls", "Spam de infantería"],
+        unitsWeak: ["Caballería pesada", "Gunpowder", "Siege fuerte"],
+        buildingsStrong: ["Cuarteles", "Castillos defensivos"],
+        buildingsWeak: ["Torres", "Murallas"],
+        civCounters: ["Franks", "Britons", "Mayans"],
+        gameplan:
+          "Quiere llegar vivo a Imperial para hacer flood de huskarls e infantería por todos lados. Evita morir en Feudal/Castle.",
+        stats: { eco: 6, mil: 8, tec: 5, naval: 1, dificultad: 3, winrate: "47%", uso: "Frecuente" }
+      },
+
+      // --- CLÁSICAS EUROPEAS/Y OTRAS ---
+      {
+        name: "Franks",
+        display: "Francos",
+        tag: "cavalry",
+        bonuses: [
+          "Caballería con más HP",
+          "Granjas más baratas",
+          "Castillos más baratos"
+        ],
+        unitsStrong: ["Knights", "Paladines", "Throwing Axeman"],
+        unitsWeak: ["Halbs", "Monjes masivos"],
+        buildingsStrong: ["Castillos", "Granjas"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Aztecs", "Mayans", "Britons"],
+        gameplan:
+          "Juegas scout a knight, boom fuerte con granjas y luego paladín. Mantente agresivo en Castle para no llegar tarde.",
+        stats: { eco: 9, mil: 8, tec: 7, naval: 2, dificultad: 4, winrate: "53%", uso: "Alta" }
+      },
+      {
+        name: "Huns",
+        display: "Hunos",
+        tag: "cavalry",
+        bonuses: [
+          "No necesitan casas",
+          "Caballería de arco muy fuerte",
+          "Presión temprana fácil"
+        ],
+        unitsStrong: ["Scouts", "Cavalry Archer", "Paladines"],
+        unitsWeak: ["Piques masivos", "Monjes bien micro"],
+        buildingsStrong: ["Establos"],
+        buildingsWeak: ["Murallas", "Navy"],
+        civCounters: ["Mayans", "Britons", "Aztecs"],
+        gameplan:
+          "Aggro total. Push temprano con scouts y luego cav archers. No dejes que el rival te lleve a late súper defensivo.",
+        stats: { eco: 7, mil: 9, tec: 7, naval: 1, dificultad: 7, winrate: "52%", uso: "Alta" }
+      },
+      {
+        name: "Mongols",
+        display: "Mongoles",
+        tag: "cavalry",
+        bonuses: [
+          "Caza más rápida",
+          "Mangudai de élite",
+          "Scout rush muy fuerte"
+        ],
+        unitsStrong: ["Scouts", "Cavalry Archer", "Mangudai"],
+        unitsWeak: ["Piques", "Monjes"],
+        buildingsStrong: ["Castillos ofensivos"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Britons", "Mayans", "Aztecs"],
+        gameplan:
+          "Scout rush agresivo, luego cav archers y mangudai. Te beneficias de peleas abiertas y raids infinitos.",
+        stats: { eco: 7, mil: 9, tec: 8, naval: 2, dificultad: 7, winrate: "51%", uso: "Alta" }
+      },
+      {
+        name: "Magyars",
+        display: "Magiares",
+        tag: "hybrid",
+        bonuses: [
+          "Scouts con upgrades gratis",
+          "Arqueros de caballería fuertes",
+          "Infantería con bonus vs bestias"
+        ],
+        unitsStrong: ["Scouts", "Cavalry Archer", "Husar"],
+        unitsWeak: ["Piques masivos", "Murallas fuertes + monks"],
+        buildingsStrong: ["Estable"],
+        buildingsWeak: ["Docks"],
+        civCounters: ["Aztecs", "Mayans", "Saracens"],
+        gameplan:
+          "Juego muy flexible de caballería. Presión desde Feudal y buena transición a cav archers + hussars en late.",
+        stats: { eco: 7, mil: 8, tec: 7, naval: 2, dificultad: 5, winrate: "49%", uso: "Media" }
+      },
+      {
+        name: "Teutons",
+        display: "Teutones",
+        tag: "late",
+        bonuses: [
+          "Torres y castillos fuertes",
+          "Monjes sólidos",
+          "Paladines muy tanky"
+        ],
+        unitsStrong: ["Paladines", "Monjes", "Siege"],
+        unitsWeak: ["Movilidad baja", "Arqueros kiting"],
+        buildingsStrong: ["Castillos", "Torres", "TC"],
+        buildingsWeak: ["Docks"],
+        civCounters: ["Britons", "Mayans", "Mongols"],
+        gameplan:
+          "Defiende bien mid game y llega a Imperial. Paladines ultra tanky + siege y monjes. Muy duro de tirar en late.",
+        stats: { eco: 7, mil: 8, tec: 7, naval: 2, dificultad: 5, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Slavs",
+        display: "Eslavos",
+        tag: "late",
+        bonuses: [
+          "Granjas fuertes",
+          "Siege poderoso",
+          "Infantería sólida"
+        ],
+        unitsStrong: ["Infantería", "Siege", "Boyar"],
+        unitsWeak: ["Arqueros móviles", "CA"],
+        buildingsStrong: ["Siege Workshop", "TC"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Mayans", "Britons", "Huns"],
+        gameplan:
+          "Boom de granjas y luego siege + infantería. Muy buenos en peleas grandes en terreno cerrado.",
+        stats: { eco: 8, mil: 8, tec: 7, naval: 2, dificultad: 5, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Britons",
+        display: "Británicos",
+        tag: "archer",
+        bonuses: [
+          "Arqueros con más rango",
+          "TCs más baratos",
+          "Muy fuerte en colinas"
+        ],
+        unitsStrong: ["Arqueros", "Arbalest", "Longbow"],
+        unitsWeak: ["Cavalry en masa", "Skirms + siege"],
+        buildingsStrong: ["TC", "Castillos defensivos"],
+        buildingsWeak: ["Navy media"],
+        civCounters: ["Franks", "Huns", "Mongols"],
+        gameplan:
+          "Juego de arqueros desde Feudal. Controla colinas, acumula masa grande y usa castillos para zonas de fuego.",
+        stats: { eco: 8, mil: 9, tec: 8, naval: 3, dificultad: 6, winrate: "53%", uso: "Alta" }
+      },
+      {
+        name: "Mayans",
+        display: "Mayas",
+        tag: "archer",
+        bonuses: [
+          "Arqueros más baratos",
+          "Recursos iniciales extra",
+          "Eco muy eficiente"
+        ],
+        unitsStrong: ["Arqueros", "Eagles", "Plumed Archer"],
+        unitsWeak: ["Caballería pesada", "Skirms + siege"],
+        buildingsStrong: ["TC", "Castillos"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Huns", "Franks", "Mongols"],
+        gameplan:
+          "Archer rush muy fuerte, eco brutal. En Imperial, plumed o arbalest + eagles para rematar.",
+        stats: { eco: 9, mil: 9, tec: 8, naval: 2, dificultad: 7, winrate: "54%", uso: "Alta" }
+      },
+      {
+        name: "Chinese",
+        display: "Chinos",
+        tag: "hybrid",
+        bonuses: [
+          "Más aldeanos iniciales",
+          "Tecnologías baratas",
+          "Muy flexibles en todo"
+        ],
+        unitsStrong: ["Arqueros", "CA", "Infantería", "Chu Ko Nu"],
+        unitsWeak: ["Inicio complejo", "Dependen de buen manejo"],
+        buildingsStrong: ["Todas las eco buildings"],
+        buildingsWeak: ["Navy media"],
+        civCounters: ["Aztecs", "Franks", "Mayans"],
+        gameplan:
+          "Civ muy completa. Puedes jugar casi todo. En ranked meta se usan builds muy precisos de archer o knight.",
+        stats: { eco: 9, mil: 9, tec: 9, naval: 4, dificultad: 8, winrate: "52%", uso: "Alta" }
+      },
+      {
+        name: "Byzantines",
+        display: "Bizantinos",
+        tag: "late",
+        bonuses: [
+          "Edificios más baratos",
+          "Trash units fuertes",
+          "Buen respuesta a muchos tipos de army"
+        ],
+        unitsStrong: ["Camellos", "Skirms", "Halbs", "Navy"],
+        unitsWeak: ["Falta unidad súper letal de cierre"],
+        buildingsStrong: ["Torres", "TC", "Docks"],
+        buildingsWeak: ["Castillos ofensivos"],
+        civCounters: ["Aztecs", "Turks", "Lithuanians"],
+        gameplan:
+          "Juego defensivo y reactivo. Muy buenos en guerra de desgaste y trash wars en late.",
+        stats: { eco: 7, mil: 8, tec: 8, naval: 9, dificultad: 5, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Persians",
+        display: "Persas",
+        tag: "cavalry",
+        bonuses: [
+          "TC y docks con más HP",
+          "Caballería fuerte",
+          "Buen boom en mapas de agua"
+        ],
+        unitsStrong: ["Knights", "War Elephant", "Navy"],
+        unitsWeak: ["Piques masivos", "Monjes"],
+        buildingsStrong: ["TC", "Docks"],
+        buildingsWeak: ["Torres"],
+        civCounters: ["Britons", "Mayans", "Aztecs"],
+        gameplan:
+          "Boom sólido y caballería fuerte. En agua son top. En tierra puedes jugar knights y elefantes en late.",
+        stats: { eco: 8, mil: 8, tec: 7, naval: 8, dificultad: 5, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Saracens",
+        display: "Sarracenos",
+        tag: "hybrid",
+        bonuses: [
+          "Bonos en mercado",
+          "Arqueros de caballería fuertes",
+          "Buen navy"
+        ],
+        unitsStrong: ["Cavalry Archer", "Camellos", "Navy"],
+        unitsWeak: ["Trash war muy larga"],
+        buildingsStrong: ["Market", "Docks"],
+        buildingsWeak: ["TC temprano"],
+        civCounters: ["Franks", "Huns", "Goths"],
+        gameplan:
+          "Muy flexibles. Puedes usar market para ajustar eco. Suelen jugar CA y camellos. Muy buenos en agua también.",
+        stats: { eco: 7, mil: 8, tec: 8, naval: 8, dificultad: 7, winrate: "49%", uso: "Media" }
+      },
+      {
+        name: "Turks",
+        display: "Turcos",
+        tag: "late",
+        bonuses: [
+          "Gunpowder fuerte",
+          "Camellos sólidos",
+          "Monjes con bonus de oro"
+        ],
+        unitsStrong: ["Janissary", "Bombard Cannon", "Camellos"],
+        unitsWeak: ["Feudal débil", "Trash war larga"],
+        buildingsStrong: ["Castillos"],
+        buildingsWeak: ["Torres", "Navy media"],
+        civCounters: ["Aztecs", "Goths", "Franks"],
+        gameplan:
+          "Quieren llegar a castle/imp para usar gunpowder. Evita morir en Feudal. Muy buenos en defensa de colinas.",
+        stats: { eco: 7, mil: 9, tec: 8, naval: 3, dificultad: 6, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Vikings",
+        display: "Vikingos",
+        tag: "late",
+        bonuses: [
+          "Eco de madera fuerte",
+          "Infantería sólida",
+          "Navy top tier"
+        ],
+        unitsStrong: ["Longboat", "Infantería", "Navy"],
+        unitsWeak: ["Caballería", "Arqueros en late"],
+        buildingsStrong: ["Docks", "TC"],
+        buildingsWeak: ["Establos"],
+        civCounters: ["Franks", "Huns", "Mongols"],
+        gameplan:
+          "En agua e híbridos son monstruos. En tierra pueden jugar archer o infantry + siege.",
+        stats: { eco: 9, mil: 7, tec: 8, naval: 10, dificultad: 5, winrate: "52%", uso: "Alta" }
+      },
+      {
+        name: "Japanese",
+        display: "Japoneses",
+        tag: "infantry",
+        bonuses: [
+          "Aldeanos mejores en pesca y recolección",
+          "Infantería fuerte",
+          "Navy muy buena"
+        ],
+        unitsStrong: ["Infantería", "Navy", "Samurai"],
+        unitsWeak: ["Caballería pesada", "CA"],
+        buildingsStrong: ["Docks", "Lumber camps"],
+        buildingsWeak: ["Establos"],
+        civCounters: ["Franks", "Huns", "Mayans"],
+        gameplan:
+          "Buen early en agua y tierra. Infantería con buen DPS y navy temible. Muy sólidos en mapas mixtos.",
+        stats: { eco: 8, mil: 8, tec: 7, naval: 9, dificultad: 6, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Italians",
+        display: "Italianos",
+        tag: "hybrid",
+        bonuses: [
+          "Subida de edad más barata",
+          "Navy fuerte",
+          "Arqueros y gunpowder decentes"
+        ],
+        unitsStrong: ["Navy", "Arqueros", "Condottiero"],
+        unitsWeak: ["Cavalry pura"],
+        buildingsStrong: ["Docks"],
+        buildingsWeak: ["Establos"],
+        civCounters: ["Turks", "Goths", "Franks"],
+        gameplan:
+          "Brillan en agua. En tierra pueden jugar crossbow + gunpowder y condottieri contra gunpowder enemigo.",
+        stats: { eco: 8, mil: 7, tec: 8, naval: 9, dificultad: 6, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Spanish",
+        display: "Españoles",
+        tag: "hybrid",
+        bonuses: [
+          "Builders más rápidos",
+          "Gunpowder fuerte",
+          "Conquistadores muy potentes"
+        ],
+        unitsStrong: ["Conquistador", "Gunpowder", "Paladines"],
+        unitsWeak: ["Arqueros en masa", "Halbs"],
+        buildingsStrong: ["Castillos", "Monasterio"],
+        buildingsWeak: ["Navy media"],
+        civCounters: ["Britons", "Mayans", "Goths"],
+        gameplan:
+          "Castillo temprano con conquistadores pega duro. En Imperial, paladín + gunpowder y buen siege.",
+        stats: { eco: 7, mil: 9, tec: 8, naval: 3, dificultad: 6, winrate: "49%", uso: "Media" }
+      },
+      {
+        name: "Incas",
+        display: "Incas",
+        tag: "infantry",
+        bonuses: [
+          "Aldeanos con bonus defensivos",
+          "Infantería flexible",
+          "Torres molestas"
+        ],
+        unitsStrong: ["Kamayuk", "Infantería", "Torre"],
+        unitsWeak: ["Arqueros fuertes", "Cavalry archers"],
+        buildingsStrong: ["Torres", "Cuartel"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Franks", "Huns", "Persians"],
+        gameplan:
+          "Juego de torres y infantería flexible. Buenos en mapas con choke points.",
+        stats: { eco: 7, mil: 7, tec: 7, naval: 2, dificultad: 6, winrate: "48%", uso: "Media" }
+      },
+      {
+        name: "Ethiopians",
+        display: "Etíopes",
+        tag: "archer",
+        bonuses: [
+          "Recursos extras al subir de edad",
+          "Arqueros muy fuertes",
+          "Siege sólido"
+        ],
+        unitsStrong: ["Arqueros", "Arbalest", "Siege"],
+        unitsWeak: ["Cavalry masiva", "Skirms + siege"],
+        buildingsStrong: ["Siege Workshop"],
+        buildingsWeak: ["Docks"],
+        civCounters: ["Franks", "Huns", "Goths"],
+        gameplan:
+          "Spikes muy fuertes cuando subes de edad. Archer play con buena transición a siege en Castle/Imp.",
+        stats: { eco: 8, mil: 9, tec: 8, naval: 2, dificultad: 6, winrate: "51%", uso: "Media" }
+      },
+      {
+        name: "Malians",
+        display: "Malianos",
+        tag: "infantry",
+        bonuses: [
+          "Edificios más baratos",
+          "Infantería con buena armadura",
+          "Camellos decentes"
+        ],
+        unitsStrong: ["Infantería", "Camellos", "Siege"],
+        unitsWeak: ["Arqueros masivos"],
+        buildingsStrong: ["TC", "Torres"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Franks", "Huns", "Turks"],
+        gameplan:
+          "Muy sólidos en tierra. Puedes jugar camellos, infantería y siege. Buena opción en mapas mixtos.",
+        stats: { eco: 8, mil: 8, tec: 8, naval: 3, dificultad: 5, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Portuguese",
+        display: "Portugueses",
+        tag: "hybrid",
+        bonuses: [
+          "Unidades gastan menos oro",
+          "Navy y organ guns fuertes",
+          "Monks decentes"
+        ],
+        unitsStrong: ["Navy", "Organ Gun", "Gunpowder"],
+        unitsWeak: ["Trash wars largas"],
+        buildingsStrong: ["Docks", "Castillos"],
+        buildingsWeak: ["Establos"],
+        civCounters: ["Turks", "Goths", "Franks"],
+        gameplan:
+          "En agua e híbridos brillan. En tierra organ gun + knight o halbs puede ser muy fuerte.",
+        stats: { eco: 7, mil: 8, tec: 8, naval: 9, dificultad: 6, winrate: "49%", uso: "Media" }
+      },
+
+      // NUEVAS / DLC (simplificadas)
+      {
+        name: "Bulgarians",
+        display: "Búlgaros",
+        tag: "infantry",
+        bonuses: [
+          "Blacksmith y siege workshop más baratos",
+          "Infantería fuerte",
+          "Konnik como unidad única"
+        ],
+        unitsStrong: ["Konnik", "Infantería", "Siege"],
+        unitsWeak: ["Archer mass"],
+        buildingsStrong: ["Siege Workshop"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Franks", "Huns", "Teutons"],
+        gameplan:
+          "Infantería y konnik como núcleo. Muy buenos timings en Castle.",
+        stats: { eco: 7, mil: 8, tec: 7, naval: 2, dificultad: 6, winrate: "49%", uso: "Media" }
+      },
+      {
+        name: "Tatars",
+        display: "Tártaros",
+        tag: "cavalry",
+        bonuses: [
+          "Bonos en colinas",
+          "CA fuertes",
+          "Sheep extra"
+        ],
+        unitsStrong: ["Cavalry Archer", "Light cav", "Keshik"],
+        unitsWeak: ["Piques", "Skirms"],
+        buildingsStrong: ["Castillos en colinas"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Mayans", "Britons", "Aztecs"],
+        gameplan:
+          "Juego de colinas y CA. Busca siempre pelear en altura y raidear.",
+        stats: { eco: 7, mil: 9, tec: 8, naval: 2, dificultad: 7, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Cumans",
+        display: "Cumanos",
+        tag: "hybrid",
+        bonuses: [
+          "TC en Feudal",
+          "Rams en Feudal",
+          "Muy agresivos o boom loco"
+        ],
+        unitsStrong: ["Scouts", "CA", "Siege"],
+        unitsWeak: ["Late sin ventaja", "Defensa débil si boom"],
+        buildingsStrong: ["TC tempranos"],
+        buildingsWeak: ["Torres"],
+        civCounters: ["Aztecs", "Mayans", "Franks"],
+        gameplan:
+          "Opciones: 2 TCs en Feudal para boom o push de rams+scouts en Feudal. Muy all-in.",
+        stats: { eco: 8, mil: 7, tec: 7, naval: 2, dificultad: 7, winrate: "48%", uso: "Media" }
+      },
+      {
+        name: "Poles",
+        display: "Polacos",
+        tag: "hybrid",
+        bonuses: [
+          "Folwarks que dan eco extra",
+          "Caballería con bonus",
+          "Obuch como UU"
+        ],
+        unitsStrong: ["Caballería", "Obuch", "Hussar"],
+        unitsWeak: ["Archer ball"],
+        buildingsStrong: ["Molinos/Folwark"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Mayans", "Britons", "Aztecs"],
+        gameplan:
+          "Eco rara con folwark, buen mid game con caballería y obuch que rompe armadura.",
+        stats: { eco: 8, mil: 8, tec: 7, naval: 2, dificultad: 6, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Bohemians",
+        display: "Bohemios",
+        tag: "late",
+        bonuses: [
+          "Monjes y gunpowder fuertes",
+          "Eco de minería sólida",
+          "Houfnice muy poderosa"
+        ],
+        unitsStrong: ["Monjes", "Gunpowder", "Houfnice"],
+        unitsWeak: ["Cavalry flood"],
+        buildingsStrong: ["Universidad", "Monasterio"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Franks", "Goths", "Turks"],
+        gameplan:
+          "Quieren llegar a late para usar houfnice + monks/gunpowder. Buenos en colinas y defensivos.",
+        stats: { eco: 7, mil: 9, tec: 9, naval: 2, dificultad: 7, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Burgundians",
+        display: "Borgoñones",
+        tag: "cavalry",
+        bonuses: [
+          "Eco y tecnologías adelantadas",
+          "Caballería fuerte",
+          "Flemish Revolution meme"
+        ],
+        unitsStrong: ["Knights", "Cavalier temprano", "Gunpowder"],
+        unitsWeak: ["Feudal algo raro", "Trash late si mal jugado"],
+        buildingsStrong: ["Monasterio", "Castillos"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Aztecs", "Mayans", "Goths"],
+        gameplan:
+          "Eco con upgrades temprano y power spikes fuertes en Castle/Imp con cavalier, gunpowder y bonus de vino.",
+        stats: { eco: 8, mil: 8, tec: 8, naval: 2, dificultad: 7, winrate: "50%", uso: "Media" }
+      },
+      {
+        name: "Sicilians",
+        display: "Sicilianos",
+        tag: "hybrid",
+        bonuses: [
+          "Menos daño de bonus",
+          "Serjeant y donjons",
+          "Buen castle drop"
+        ],
+        unitsStrong: ["Serjeant", "Knights", "Donjon"],
+        unitsWeak: ["Archer ball", "Monjes vs castle drop"],
+        buildingsStrong: ["Donjons", "Castillos"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Goths", "Franks", "Aztecs"],
+        gameplan:
+          "Castle drops y juego de serjeant. Muy buenos empujando posiciones fijas.",
+        stats: { eco: 7, mil: 8, tec: 7, naval: 2, dificultad: 6, winrate: "49%", uso: "Media" }
+      },
+      {
+        name: "Hindustanis",
+        display: "Hindustanis",
+        tag: "cavalry",
+        bonuses: [
+          "Camellos fuertes",
+          "Ghulam útil contra arqueros",
+          "Aldeanos más baratos"
+        ],
+        unitsStrong: ["Camellos", "Ghulam", "Gunpowder"],
+        unitsWeak: ["Halbs", "Siege fuerte"],
+        buildingsStrong: ["TC", "Monasterio"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Franks", "Turks", "Cavalry civs"],
+        gameplan:
+          "Anti-cavalry y anti-archer con camellos y ghulam. Muy buenos en mid-late game.",
+        stats: { eco: 8, mil: 9, tec: 8, naval: 2, dificultad: 7, winrate: "51%", uso: "Media" }
+      },
+      {
+        name: "Dravidians",
+        display: "Dravidianos",
+        tag: "hybrid",
+        bonuses: [
+          "Extra madera al subir de edad",
+          "Buen juego de infantería y navy",
+          "UU anti-caballería"
+        ],
+        unitsStrong: ["Infantería", "Navy", "UU anti-cav"],
+        unitsWeak: ["Cavalry flood"],
+        buildingsStrong: ["Docks"],
+        buildingsWeak: ["Establos"],
+        civCounters: ["Huns", "Franks", "Persians"],
+        gameplan:
+          "Muy buenos en mapas de agua y tierra mixta. Juego de infantería + navy.",
+        stats: { eco: 8, mil: 7, tec: 7, naval: 9, dificultad: 6, winrate: "49%", uso: "Media" }
+      },
+      {
+        name: "Bengalis",
+        display: "Bengalíes",
+        tag: "hybrid",
+        bonuses: [
+          "Aldeanos extra al subir de edad",
+          "Elefantes y monks decentes",
+          "Navy buena"
+        ],
+        unitsStrong: ["Elefantes", "Monjes", "Navy"],
+        unitsWeak: ["Piques", "Archer ball"],
+        buildingsStrong: ["Docks"],
+        buildingsWeak: ["Torres"],
+        civCounters: ["Huns", "Mayans", "Britons"],
+        gameplan:
+          "Eco rara con aldeanos extra. Puedes jugar elefantes en late y navy fuerte.",
+        stats: { eco: 8, mil: 7, tec: 7, naval: 8, dificultad: 6, winrate: "48%", uso: "Media" }
+      },
+      {
+        name: "Armenians",
+        display: "Armenios",
+        tag: "infantry",
+        bonuses: [
+          "Infantería muy sólida",
+          "UU híbrida",
+          "Buen control de colinas"
+        ],
+        unitsStrong: ["Infantería", "UU", "Siege"],
+        unitsWeak: ["Cavalry spam"],
+        buildingsStrong: ["Castillos"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Cavs genéricas"],
+        gameplan:
+          "Juego de infantería con buenas herramientas de siege. Más orientado a peleas en tierra.",
+        stats: { eco: 7, mil: 8, tec: 7, naval: 2, dificultad: 6, winrate: "49%", uso: "Baja" }
+      },
+      {
+        name: "Georgians",
+        display: "Georgianos",
+        tag: "cavalry",
+        bonuses: [
+          "Caballería con trucos defensivos",
+          "Constricciones fuertes en colinas",
+          "Buen mid-late en tierra"
+        ],
+        unitsStrong: ["Caballería", "UU", "Siege"],
+        unitsWeak: ["Archer ball"],
+        buildingsStrong: ["Castillos"],
+        buildingsWeak: ["Navy"],
+        civCounters: ["Archer civs"],
+        gameplan:
+          "Tienden a pelear con caballería y control de terreno. No son top en agua.",
+        stats: { eco: 7, mil: 8, tec: 7, naval: 2, dificultad: 6, winrate: "48%", uso: "Baja" }
+      }
+    ];
+
+    // Guías genéricas por tipo de civ
+    const civTypeGuides = {
+      archer: {
+        danger:
+          "Civ de arqueros. Fuerte en Feudal y Castle con control de colinas y rango.",
+        defense:
+          "Defiende con escaramuzas, muros y algo de caballería ligera para limpiar.",
+        attack:
+          "Ataca su madera y oro temprano. En Castle mezcla knights y siege para borrar arquerías."
+      },
+      cavalry: {
+        danger:
+          "Civ de caballería. Scouts y knights fuertes con mucha movilidad para raids.",
+        defense:
+          "Defiende con piques y monjes cerca de tus TCs. Usa muros para frenar raids.",
+        attack:
+          "Ataca su eco con tus propios knights o arqueros bien protegidos. Niega granjas y oro."
+      },
+      infantry: {
+        danger:
+          "Civ de infantería o águilas. Muy peligrosa en melee y en floods de mid-late.",
+        defense:
+          "Defiende con arqueros y skirms. Usa muros y choke points para kitear.",
+        attack:
+          "Ataca con arqueros y siege. Evita peleas frontales de melee sin apoyo."
+      },
+      hybrid: {
+        danger:
+          "Civ muy flexible. Puede jugar archer, cav o híbrido según mapa y mapa.",
+        defense:
+          "Scout temprano para ver su plan. Skirms vs archer, piques vs cav.",
+        attack:
+          "Ataca donde su compo sea más débil. Si va cav, cambia a arqueros. Si va archer, caballería y skirms."
+      },
+      late: {
+        danger:
+          "Civ muy fuerte en late game, con eco o army brutal en Imperial.",
+        defense:
+          "Defiende mid game y no pierdas TCs. Cuida no morir a all-in temprano.",
+        attack:
+          "Ataca antes de su pico o espera tú tener eco igual de grande para wars largas de trash y siege."
+      }
+    };
+
+    // Matchups por plan del rival
+    const enemyPlans = [
+      {
+        id: "archers",
+        name: "Rival a arqueros (Feudal/Crossbow)",
+        counters: "Skirms + caballería ligera/knights y siege rams en Castle.",
+        techs:
+          "Fletching/Bodkin en tus arqueros si los usas, armadura de caballería, Ballistics, Thumb Ring.",
+        plan:
+          "En Feudal responde con skirms y muros. En Castle combina knights + skirm o knight + siege, toma colinas y destruye arquerías."
+      },
+      {
+        id: "scouts-knights",
+        name: "Rival a scouts y luego knights",
+        counters:
+          "Piques, monjes y muros bien cerrados, más tu propia caballería si tu civ lo permite.",
+        techs:
+          "Línea de pike, armadura de infantería, techs de monjes si vas muy monk heavy.",
+        plan:
+          "En Feudal haz 3-5 spears con skirms. En Castle pikes + monjes + algunos knights o camels y pelea cerca de tus TCs."
+      },
+      {
+        id: "infantry",
+        name: "Rival a infantería pesada (champions, huskarls)",
+        counters: "Arqueros, hand cannoneers y onagers.",
+        techs: "Química, Hand Cannoneers, upgrades de arquero, Siege Onager.",
+        plan:
+          "Evita peleas de melee frontales. Kitéa y usa colinas. Siege detrás para borrar grupos grandes."
+      },
+      {
+        id: "eagles",
+        name: "Rival a águilas / meso",
+        counters: "Knights, skirms y hand cannoneers en late.",
+        techs:
+          "Ataque y armadura de caballería, Heresy contra monjes si hace falta.",
+        plan:
+          "No te quedes solo en archer. Transiciona a knights pronto y presiona oro secundario y terciario."
+      },
+      {
+        id: "monks-siege",
+        name: "Rival a monjes con siege (push all-in)",
+        counters: "Light cav en masa, mangonels defensivos, torres y quickwalls.",
+        techs: "Light Cavalry, algunas techs de monjes, siege básico.",
+        plan:
+          "Haz muchos light cav, mata monjes primero y luego siege. No pelees con knights caros contra muchos monjes."
+      },
+      {
+        id: "trash-war",
+        name: "Guerra de basura (halbs, skirms, hussars)",
+        counters:
+          "Mejor eco, hussars agresivos y siege detrás (onagers, rams).",
+        techs: "Hussar, Halberdier, Elite Skirm, eco completa, Siege Engineers.",
+        plan:
+          "En guerras largas de trash, cuida eco, raidea con hussars y empuja con siege bien protegido."
+      },
+      {
+        id: "boom-fc",
+        name: "Rival boom FC muy greedy",
+        counters:
+          "Feudal agresivo, forward de arquerías o establos, niega oro y piedra.",
+        techs:
+          "Fletching y ataque/armadura básica de tu army Feudal.",
+        plan:
+          "No lo dejes llegar cómodo a Castle. Haz scout rush o archer rush y mata aldeanos, castiga TCs adelantados."
+      },
+      {
+        id: "water",
+        name: "Mapas de agua (galleys, fire ships)",
+        counters: "Fire ships vs galleys, demo ships vs grupos de barcos.",
+        techs:
+          "Fletching/Bodkin para barcos, War Galley, Careening, armor naval.",
+        plan:
+          "Gana agua al inicio para proteger pesca. Luego decides si pasas a tierra o sigues navy full."
+      }
+    ];
+
+    // META: mejores picks vs algunas civs concretas
+    const civMetaCounters = {
+      Mayans: [
+        {
+          name: "Huns",
+          reason: "CA móviles para castigar arqueros y eagles.",
+          feudal: "Scouts rápidos, castiga eco abierta.",
+          castle: "Cavalry archers con bodkin y mangonels.",
+          imperial: "CA full + hussars para desgaste infinito."
+        },
+        {
+          name: "Franks",
+          reason: "Caballería dura que entra bien a archer comps.",
+          feudal: "Scouts agresivos, niega oro.",
+          castle: "Knights + mangonels contra archer balls.",
+          imperial: "Paladines con buen eco de granjas."
+        },
+        {
+          name: "Mongols",
+          reason: "Scout rush fuerte y mangudai en late.",
+          feudal: "Scout rush muy temprano por caza rápida.",
+          castle: "CA y primeros mangudai.",
+          imperial: "Mangudai + siege contra archer civs."
+        }
+      ],
+      Franks: [
+        {
+          name: "Berbers",
+          reason: "Camellos y camel archer muy eficientes vs knights.",
+          feudal: "Scouts defensivos, muros y buena eco.",
+          castle: "Camels + camel archers vs knights.",
+          imperial: "Hussars + camel archers y raids a granjas."
+        },
+        {
+          name: "Slavs",
+          reason: "Siege fuerte y eco de granjas para wars largas.",
+          feudal: "Defensa sólida y muros.",
+          castle: "Siege + infantería vs knights.",
+          imperial: "Halbs + siege pesado en peleas largas."
+        },
+        {
+          name: "Teutons",
+          reason: "Paladines muy tanky, monjes y castillos fuertes.",
+          feudal: "Juego defensivo, muros y spear.",
+          castle: "Knights pesados + monjes.",
+          imperial: "Paladines, monjes y siege empujando TCs."
+        }
+      ],
+      Aztecs: [
+        {
+          name: "Franks",
+          reason: "Paladines y caballería pesada contra eagles.",
+          feudal: "Scouts para frenar drush/maa.",
+          castle: "Knights + mangonels contra eagles/monks.",
+          imperial: "Paladines con buena eco vs flood de eagles."
+        },
+        {
+          name: "Magyars",
+          reason: "Scouts baratos y cav archers vs eagles.",
+          feudal: "Scouts con upgrade gratis, castiga forward.",
+          castle: "CA + pocos knights vs águilas.",
+          imperial: "CA + hussars para desgaste continuo."
+        },
+        {
+          name: "Burgundians",
+          reason: "Power spike temprano de caballería.",
+          feudal: "Eco adelantada, seguridad defensiva.",
+          castle: "Cavalier temprano vs eagles.",
+          imperial: "Paladines + gunpowder."
+        }
+      ]
+    };
+
+    // === TABS ===
+    qsa(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tabId = btn.dataset.tab;
+        qsa(".tab-btn").forEach((b) => b.classList.remove("active"));
+        qsa(".tab").forEach((t) => t.classList.remove("active"));
+        btn.classList.add("active");
+        const tab = qs(`#tab-${tabId}`);
+        if (tab) tab.classList.add("active");
+      });
+    });
+
+    // === THEME TOGGLE ===
+    const body = document.body;
+    const themeToggle = qs("#themeToggle");
+
+    function applyStoredTheme() {
+      const stored = localStorage.getItem("aoe2_theme");
+      if (stored === "light") {
+        body.setAttribute("data-theme", "light");
+        themeToggle.querySelector(".icon").textContent = "☀️";
+        themeToggle.querySelector("span:nth-child(2)").textContent = "Modo claro";
+      }
+    }
+
+    applyStoredTheme();
+
+    themeToggle.addEventListener("click", () => {
+      const current = body.getAttribute("data-theme") || "dark";
+      const next = current === "dark" ? "light" : "dark";
+      body.setAttribute("data-theme", next);
+      localStorage.setItem("aoe2_theme", next);
+      if (next === "light") {
+        themeToggle.querySelector(".icon").textContent = "☀️";
+        themeToggle.querySelector("span:nth-child(2)").textContent = "Modo claro";
+      } else {
+        themeToggle.querySelector(".icon").textContent = "🌙";
+        themeToggle.querySelector("span:nth-child(2)").textContent = "Modo oscuro";
+      }
+    });
+
+    // === BUILD ORDERS UI ===
+    const buildSelect = qs("#buildSelect");
+    const stepsList = qs("#stepsList");
+    const buildTipText = qs("#buildTipText");
+    const buildTimings = qs("#buildTimings");
+    const buildEco = qs("#buildEco");
+    const buildUsage = qs("#buildUsage");
