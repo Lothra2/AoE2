@@ -541,6 +541,11 @@
       background: rgba(15, 23, 42, 0.98);
     }
 
+    .civ-card.active {
+      border-color: rgba(34, 197, 94, 0.9);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4);
+    }
+
     .civ-name {
       font-weight: 600;
     }
@@ -823,7 +828,6 @@
       color: var(--accent-strong);
       font-size: 0.72rem;
     }
-
   </style>
 </head>
 <body data-theme="dark">
@@ -1574,7 +1578,7 @@
       }
     ];
 
-    // === DATA: CIVS DETALLADAS (lista amplia, meta simple) ===
+    // === DATA: CIVS DETALLADAS ===
     const civs = [
       {
         name: "Aztecs",
@@ -2527,55 +2531,459 @@
           feudal: "Eco adelantada, seguridad defensiva.",
           castle: "Cavalier temprano vs eagles.",
           imperial: "Paladines + gunpowder."
-        }
+        },
       ]
     };
 
-    // === TABS ===
-    qsa(".tab-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const tabId = btn.dataset.tab;
-        qsa(".tab-btn").forEach((b) => b.classList.remove("active"));
-        qsa(".tab").forEach((t) => t.classList.remove("active"));
-        btn.classList.add("active");
-        const tab = qs(`#tab-${tabId}`);
-        if (tab) tab.classList.add("active");
+    // === UI LOGIC ===
+
+    const state = {
+      currentFilter: "all",
+      searchTerm: "",
+      activeCivName: null
+    };
+
+    // Tabs
+    function setupTabs() {
+      const tabButtons = qsa(".tab-btn");
+      tabButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const tabId = btn.getAttribute("data-tab");
+
+          tabButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          qsa(".tab").forEach((tab) => tab.classList.remove("active"));
+          const section = qs(`#tab-${tabId}`);
+          if (section) section.classList.add("active");
+        });
       });
-    });
+    }
 
-    // === THEME TOGGLE ===
-    const body = document.body;
-    const themeToggle = qs("#themeToggle");
+    // Theme
+    function setupTheme() {
+      const toggle = qs("#themeToggle");
+      const saved = localStorage.getItem("aoe2_theme");
+      if (saved === "light") {
+        document.body.setAttribute("data-theme", "light");
+        toggle.querySelector("span.icon").textContent = "☀️";
+        toggle.querySelector("span:last-child").textContent = "Modo claro";
+      }
 
-    function applyStoredTheme() {
-      const stored = localStorage.getItem("aoe2_theme");
-      if (stored === "light") {
-        body.setAttribute("data-theme", "light");
-        themeToggle.querySelector(".icon").textContent = "☀️";
-        themeToggle.querySelector("span:nth-child(2)").textContent = "Modo claro";
+      toggle.addEventListener("click", () => {
+        const current = document.body.getAttribute("data-theme") || "dark";
+        const next = current === "dark" ? "light" : "dark";
+        document.body.setAttribute("data-theme", next);
+        localStorage.setItem("aoe2_theme", next);
+        if (next === "light") {
+          toggle.querySelector("span.icon").textContent = "☀️";
+          toggle.querySelector("span:last-child").textContent = "Modo claro";
+        } else {
+          toggle.querySelector("span.icon").textContent = "🌙";
+          toggle.querySelector("span:last-child").textContent = "Modo oscuro";
+        }
+      });
+    }
+
+    // Builds
+    function initBuilds() {
+      const select = qs("#buildSelect");
+      const infoRow = qs("#buildInfoRow");
+      const stepsList = qs("#stepsList");
+      const tipsBox = qs("#buildTipsBox");
+      const tipText = qs("#buildTipText");
+      const typePill = qs("#buildTypePill");
+      const timings = qs("#buildTimings");
+      const eco = qs("#buildEco");
+      const usage = qs("#buildUsage");
+      const impPlan = qs("#buildImpPlan");
+
+      buildOrders.forEach((b) => {
+        const opt = document.createElement("option");
+        opt.value = b.id;
+        opt.textContent = b.name;
+        select.appendChild(opt);
+      });
+
+      function renderBuild(buildId) {
+        const build = buildOrders.find((b) => b.id === buildId) || buildOrders[0];
+        if (!build) return;
+
+        typePill.textContent = build.type || "Estándar";
+        timings.textContent = build.timings || "";
+        eco.textContent = build.eco || "";
+        usage.textContent = build.usage || "";
+        impPlan.textContent = build.impPlan || "";
+        tipText.textContent = build.tip || "";
+
+        infoRow.innerHTML = "";
+        if (build.infoChips && build.infoChips.length) {
+          build.infoChips.forEach((chip) => {
+            const div = document.createElement("div");
+            div.className = "chip";
+            div.innerHTML = `<strong>${chip.label}:</strong><span>${chip.value}</span>`;
+            infoRow.appendChild(div);
+          });
+        }
+
+        stepsList.innerHTML = "";
+        if (build.steps && build.steps.length) {
+          build.steps.forEach((step, idx) => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <div class="step-index">${idx + 1}</div>
+              <div class="step-text">
+                <div class="step-main">${step.main}</div>
+                <div class="step-detail">${step.detail || ""}</div>
+              </div>
+            `;
+            stepsList.appendChild(li);
+          });
+        }
+      }
+
+      select.addEventListener("change", () => {
+        renderBuild(select.value);
+      });
+
+      if (buildOrders.length) {
+        select.value = buildOrders[0].id;
+        renderBuild(buildOrders[0].id);
       }
     }
 
-    applyStoredTheme();
+    // Matchups
+    function initMatchups() {
+      const enemyCivSelect = qs("#enemyCivSelect");
+      const enemyPlanSelect = qs("#enemyPlanSelect");
+      const enemyCivDanger = qs("#enemyCivDanger");
+      const enemyCivDefense = qs("#enemyCivDefense");
+      const enemyCivAttack = qs("#enemyCivAttack");
+      const enemyCivSummary = qs("#enemyCivSummary");
+      const matchupCounters = qs("#matchupCounters");
+      const matchupTechs = qs("#matchupTechs");
+      const matchupPlan = qs("#matchupPlan");
 
-    themeToggle.addEventListener("click", () => {
-      const current = body.getAttribute("data-theme") || "dark";
-      const next = current === "dark" ? "light" : "dark";
-      body.setAttribute("data-theme", next);
-      localStorage.setItem("aoe2_theme", next);
-      if (next === "light") {
-        themeToggle.querySelector(".icon").textContent = "☀️";
-        themeToggle.querySelector("span:nth-child(2)").textContent = "Modo claro";
-      } else {
-        themeToggle.querySelector(".icon").textContent = "🌙";
-        themeToggle.querySelector("span:nth-child(2)").textContent = "Modo oscuro";
+      const sortedCivs = [...civs].sort((a, b) =>
+        a.display.localeCompare(b.display)
+      );
+
+      sortedCivs.forEach((c) => {
+        const opt = document.createElement("option");
+        opt.value = c.name;
+        opt.textContent = c.display;
+        enemyCivSelect.appendChild(opt);
+      });
+
+      enemyPlans.forEach((p) => {
+        const opt = document.createElement("option");
+        opt.value = p.id;
+        opt.textContent = p.name;
+        enemyPlanSelect.appendChild(opt);
+      });
+
+      function renderEnemyCiv(name) {
+        const civ = civs.find((c) => c.name === name);
+        if (!civ) return;
+
+        const guide = civTypeGuides[civ.tag] || {
+          danger: "Civ flexible. Mira lo que hace y responde en consecuencia.",
+          defense: "Muros, scouting y army adecuado según unidad principal.",
+          attack:
+            "Castiga eco abierta, toma colinas y no lo dejes llegar cómodo a su mejor edad."
+        };
+
+        enemyCivDanger.textContent = guide.danger;
+        enemyCivDefense.textContent = guide.defense;
+        enemyCivAttack.textContent = guide.attack;
+        enemyCivSummary.textContent = civ.gameplan || "";
       }
-    });
 
-    // === BUILD ORDERS UI ===
-    const buildSelect = qs("#buildSelect");
-    const stepsList = qs("#stepsList");
-    const buildTipText = qs("#buildTipText");
-    const buildTimings = qs("#buildTimings");
-    const buildEco = qs("#buildEco");
-    const buildUsage = qs("#buildUsage");
+      function renderEnemyPlan(id) {
+        const plan = enemyPlans.find((p) => p.id === id) || enemyPlans[0];
+        if (!plan) return;
+        matchupCounters.textContent = plan.counters;
+        matchupTechs.textContent = plan.techs;
+        matchupPlan.textContent = plan.plan;
+      }
+
+      enemyCivSelect.addEventListener("change", () => {
+        renderEnemyCiv(enemyCivSelect.value);
+      });
+
+      enemyPlanSelect.addEventListener("change", () => {
+        renderEnemyPlan(enemyPlanSelect.value);
+      });
+
+      if (sortedCivs.length) {
+        enemyCivSelect.value = sortedCivs[0].name;
+        renderEnemyCiv(sortedCivs[0].name);
+      }
+      if (enemyPlans.length) {
+        enemyPlanSelect.value = enemyPlans[0].id;
+        renderEnemyPlan(enemyPlans[0].id);
+      }
+    }
+
+    // Civ explorer
+    function initCivExplorer() {
+      const civList = qs("#civList");
+      const searchInput = qs("#civSearchInput");
+      const filterButtons = qsa(".filter-btn");
+
+      const detailName = qs("#detailName");
+      const detailBonuses = qs("#detailBonuses");
+      const detailUnitsStrong = qs("#detailUnitsStrong");
+      const detailUnitsWeak = qs("#detailUnitsWeak");
+      const detailBuildingsStrong = qs("#detailBuildingsStrong");
+      const detailBuildingsWeak = qs("#detailBuildingsWeak");
+      const detailCivCounters = qs("#detailCivCounters");
+      const detailGameplan = qs("#detailGameplan");
+      const detailStats = qs("#detailStats");
+      const detailWinrate = qs("#detailWinrate");
+      const detailUso = qs("#detailUso");
+      const detailDificultad = qs("#detailDificultad");
+
+      function renderDetail(civ) {
+        if (!civ) {
+          detailName.textContent = "Selecciona una civ.";
+          detailBonuses.textContent = "Verás aquí los bonos principales.";
+          detailUnitsStrong.textContent = "-";
+          detailUnitsWeak.textContent = "-";
+          detailBuildingsStrong.textContent = "-";
+          detailBuildingsWeak.textContent = "-";
+          detailCivCounters.textContent = "-";
+          detailGameplan.textContent = "-";
+          detailStats.innerHTML = "";
+          detailWinrate.textContent = "Winrate: -";
+          detailUso.textContent = "Uso: -";
+          detailDificultad.textContent = "Dificultad: -/10";
+          return;
+        }
+
+        detailName.textContent = civ.display;
+        detailBonuses.textContent = civ.bonuses.join(" · ");
+        detailUnitsStrong.textContent = civ.unitsStrong.join(", ");
+        detailUnitsWeak.textContent = civ.unitsWeak.join(", ");
+        detailBuildingsStrong.textContent = civ.buildingsStrong.join(", ");
+        detailBuildingsWeak.textContent = civ.buildingsWeak.join(", ");
+        detailCivCounters.textContent = civ.civCounters.join(", ");
+        detailGameplan.textContent = civ.gameplan;
+
+        detailStats.innerHTML = "";
+        const statDefs = [
+          { key: "eco", label: "Eco" },
+          { key: "mil", label: "Army" },
+          { key: "tec", label: "Tech" },
+          { key: "naval", label: "Navy" }
+        ];
+        statDefs.forEach((s) => {
+          const v = civ.stats[s.key] || 0;
+          const row = document.createElement("div");
+          row.className = "stat-row";
+          row.innerHTML = `
+            <span class="label">${s.label}</span>
+            <div class="stat-bar">
+              <div class="stat-bar-fill" style="width:${Math.min(
+                100,
+                v * 10
+              )}%"></div>
+            </div>
+          `;
+          detailStats.appendChild(row);
+        });
+
+        detailWinrate.textContent = `Winrate: ${civ.stats.winrate || "-"}`;
+        detailUso.textContent = `Uso: ${civ.stats.uso || "-"}`;
+        detailDificultad.textContent = `Dificultad: ${
+          civ.stats.dificultad || "-"
+        }/10`;
+      }
+
+      function renderCivList() {
+        civList.innerHTML = "";
+        const term = state.searchTerm.trim().toLowerCase();
+        const filter = state.currentFilter;
+
+        const filtered = civs.filter((c) => {
+          if (filter !== "all" && c.tag !== filter) return false;
+          if (!term) return true;
+          const full = `${c.display} ${c.name}`.toLowerCase();
+          return full.includes(term);
+        });
+
+        filtered.forEach((c) => {
+          const div = document.createElement("div");
+          div.className = "civ-card";
+          if (state.activeCivName === c.name) div.classList.add("active");
+          div.innerHTML = `
+            <div class="civ-name">${c.display}</div>
+            <div class="civ-tag">${c.tag.toUpperCase()}</div>
+            <div class="civ-note">${c.bonuses[0] || ""}</div>
+          `;
+          div.addEventListener("click", () => {
+            state.activeCivName = c.name;
+            renderCivList();
+            renderDetail(c);
+          });
+          civList.appendChild(div);
+        });
+
+        if (!state.activeCivName && filtered[0]) {
+          state.activeCivName = filtered[0].name;
+          renderDetail(filtered[0]);
+          renderCivList();
+        }
+      }
+
+      searchInput.addEventListener("input", () => {
+        state.searchTerm = searchInput.value;
+        renderCivList();
+      });
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filterButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          state.currentFilter = btn.getAttribute("data-filter") || "all";
+          renderCivList();
+        });
+      });
+
+      renderDetail(null);
+      renderCivList();
+    }
+
+    // Mi Civ Ideal vs rival
+    function getMetaPicksForEnemy(enemyName, enemyCiv) {
+      if (civMetaCounters[enemyName]) {
+        return civMetaCounters[enemyName];
+      }
+
+      const tag = enemyCiv ? enemyCiv.tag : null;
+      let desiredTag = "cavalry";
+
+      if (tag === "archer") desiredTag = "cavalry";
+      else if (tag === "cavalry") desiredTag = "infantry";
+      else if (tag === "infantry") desiredTag = "archer";
+      else if (tag === "late") desiredTag = "hybrid";
+      else if (tag === "hybrid") desiredTag = "cavalry";
+
+      const candidates = civs.filter((c) => c.tag === desiredTag).slice(0, 3);
+
+      return candidates.map((c) => {
+        const guide = civTypeGuides[tag] || {
+          danger: "",
+          defense: "",
+          attack: ""
+        };
+        return {
+          name: c.display,
+          reason: `Buen pick genérico contra esta civ por su estilo de ${c.tag}.`,
+          feudal: `Juega un Feudal sólido. ${guide.defense}`,
+          castle: `En Castle, busca tu power spike natural de ${c.tag}. Presiona eco y controla colinas.`,
+          imperial:
+            "En Imperial, arma tu compo fuerte con upgrades completos y siege para cerrar la partida."
+        };
+      });
+    }
+
+    function initMyCiv() {
+      const enemySelect = qs("#myCivEnemySelect");
+      const enemySummary = qs("#myCivEnemySummary");
+      const enemyPlan = qs("#myCivEnemyPlan");
+      const picksContainer = qs("#myCivPicks");
+
+      const sortedCivs = [...civs].sort((a, b) =>
+        a.display.localeCompare(b.display)
+      );
+
+      sortedCivs.forEach((c) => {
+        const opt = document.createElement("option");
+        opt.value = c.name;
+        opt.textContent = c.display;
+        enemySelect.appendChild(opt);
+      });
+
+      function renderMyCiv(enemyName) {
+        const civ = civs.find((c) => c.name === enemyName);
+        if (!civ) return;
+
+        const guide = civTypeGuides[civ.tag] || {
+          danger: "",
+          defense: "",
+          attack: ""
+        };
+
+        enemySummary.textContent =
+          civ.gameplan ||
+          "Civ sólida con plan flexible. Mira qué army principal juega y responde en consecuencia.";
+
+        enemyPlan.textContent =
+          `Punto fuerte: ${guide.danger} Intenta evitar su pico más fuerte y ` +
+          `forzar peleas cuando tu compo sea más eficiente.`;
+
+        const picks = getMetaPicksForEnemy(enemyName, civ);
+        picksContainer.innerHTML = "";
+
+        picks.forEach((p, idx) => {
+          const div = document.createElement("div");
+          div.className = "pick-card";
+          div.innerHTML = `
+            <div class="pick-card-title">
+              <span class="name">${idx + 1}. ${p.name}</span>
+              <span class="small-label">${p.reason}</span>
+            </div>
+            <div class="pick-card-ages">
+              <div><strong>Feudal:</strong> ${p.feudal}</div>
+              <div><strong>Castle:</strong> ${p.castle}</div>
+              <div><strong>Imperial:</strong> ${p.imperial}</div>
+            </div>
+          `;
+          picksContainer.appendChild(div);
+        });
+      }
+
+      enemySelect.addEventListener("change", () => {
+        renderMyCiv(enemySelect.value);
+      });
+
+      if (sortedCivs.length) {
+        enemySelect.value = sortedCivs[0].name;
+        renderMyCiv(sortedCivs[0].name);
+      }
+    }
+
+    // Notas
+    function initNotes() {
+      const textarea = qs("#notesTextarea");
+      const saveBtn = qs("#saveNotesBtn");
+      const clearBtn = qs("#clearNotesBtn");
+
+      const saved = localStorage.getItem("aoe2_notes");
+      if (saved) textarea.value = saved;
+
+      saveBtn.addEventListener("click", () => {
+        localStorage.setItem("aoe2_notes", textarea.value || "");
+      });
+
+      clearBtn.addEventListener("click", () => {
+        textarea.value = "";
+        localStorage.removeItem("aoe2_notes");
+      });
+    }
+
+    function initApp() {
+      setupTheme();
+      setupTabs();
+      initBuilds();
+      initMatchups();
+      initCivExplorer();
+      initMyCiv();
+      initNotes();
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
